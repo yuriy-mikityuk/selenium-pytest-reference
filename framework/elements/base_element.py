@@ -7,6 +7,10 @@ class BaseElement:
         self.driver = driver
         self.locator = locator
 
+    def click(self):
+        # TODO: LOGGER
+        self.wait_until_clickable().click()
+
     def find_element(self):
         return self.driver.find_element(*self.locator)
 

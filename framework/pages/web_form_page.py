@@ -5,6 +5,7 @@ from framework.elements.text_input import TextInput
 from framework.elements.button import Button
 from framework.pages.base_page import BasePage
 from framework.pages.submitted_form_page import SubmittedFormPage
+from framework.elements.checkbox import Checkbox
 
 class WebFormPage(BasePage):
 
@@ -12,6 +13,8 @@ class WebFormPage(BasePage):
     _TEXT_INPUT = (By.ID, "my-text-id")
     _SUBMIT_BUTTON = (By.XPATH, "//button[contains(text(), 'Submit')]")
     _DROPDOWN_OPTIONS = (By.XPATH, "//select[@name='my-select']")
+    _CHECKED_CHECKBOX = (By.XPATH, "//input[@id='my-check-1']")
+    _DEFAULT_CHECKBOX = (By.XPATH, "//input[@id='my-check-2']")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -19,6 +22,8 @@ class WebFormPage(BasePage):
         self.text_input = TextInput(driver, self._TEXT_INPUT)
         self.submit_button = Button(driver, self._SUBMIT_BUTTON)
         self.dropdown_options = Dropdown(driver, self._DROPDOWN_OPTIONS)
+        self.default_checkbox = Checkbox(driver, self._DEFAULT_CHECKBOX)
+        self.checked_checkbox = Checkbox(driver, self._CHECKED_CHECKBOX)
 
     def submit(self):
         self.submit_button.click()
