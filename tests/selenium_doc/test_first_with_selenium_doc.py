@@ -1,54 +1,24 @@
-from time import sleep
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+def test_add_box(dynamic_page):
+    count_before = dynamic_page.get_boxes_count()
+    assert count_before == 0
+    assert dynamic_page.add_box_button.is_displayed()
 
-def test_dynamic_page():
-    options = webdriver.ChromeOptions()
-    options.browser_version = "stable"
+    dynamic_page.add_box()
+    dynamic_page.add_box()
+    assert dynamic_page.get_boxes_count() == count_before + 2
+
+def test_reveal_input(dynamic_page):
+    assert not dynamic_page.revealed_input.is_displayed()
+
+    # Кликаем на кнопку добавить инпут
+    dynamic_page.reveal_input()
+
+    dynamic_page.revealed_input.fill("First")
+    dynamic_page.revealed_input.fill('Selenium')
+    assert dynamic_page.revealed_input.get_value() == "Selenium"
 
 
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(0.5)
 
-    driver.get("https://www.selenium.dev/selenium/web/dynamic.html")
-    title = driver.title
-    print(title)
 
-    add_box_button = driver.find_element(by=By.XPATH, value="//input[@id='adder' and @type='button']")
-    submit_button = driver.find_element(by=By.CSS_SELECTOR, value='button')
-
-    add_box_button.send_keys('Selenium')
-    submit_button.click()
-
-    message = driver.find_element(by=By.ID, value="message")
-    text = message.text
-    print(text)
-    driver.quit()
-
-def test_dynamic_page_with_selenium_doc():
-    """
-    Учебное задание из документации селениум
-    """
-    # Настройка браузера
-    options = webdriver.ChromeOptions()
-    options.browser_version = "stable"
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(1)
-
-    # Переход на страницу
-    driver.get("https://www.selenium.dev/selenium/web/dynamic.html")
-
-    # Given: бокса ещё нет
-    assert driver.find_elements(By.ID, "box0")
-
-    # Получение и проверки видимости кнопки 'Добавить коробку'
-    add_box_button = driver.find_element(By.XPATH, value="//input[@id='adder' and @type='button']")
-    assert add_box_button.is_displayed()
-    # When
-    add_box_button.click()
-
-    # Проверка появления первого красного квадрата после нажатия на кнопку add_box_button
-    red_box = driver.find_element(By.XPATH, value="//*[@id='box0']")
-    assert red_box.is_displayed()
 
 
