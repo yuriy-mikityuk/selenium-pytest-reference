@@ -10,6 +10,7 @@ class AlertsPage(BasePage):
 
     _SIMPLE_ALERT_TRIGGER = (By.ID, "alert")
     _CONFIRM_ALERT_TRIGGER = (By.ID, "confirm")
+    _PROMPT_ALERT_TRIGGER = (By.ID, "prompt")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -22,12 +23,22 @@ class AlertsPage(BasePage):
             driver,
             self._CONFIRM_ALERT_TRIGGER,
         )
+        self.prompt_alert_trigger = BaseElement(
+            driver,
+            self._PROMPT_ALERT_TRIGGER,
+        )
+
+    def _open_alert(self, trigger: BaseElement):
+        trigger.click()
+        return WebDriverWait(self.driver, 10).until(
+            EC.alert_is_present()
+        )
 
     def open_simple_alert(self):
-        self.simple_alert_trigger.click()
-        return WebDriverWait(self.driver, 10).until(EC.alert_is_present())
-
+        return self._open_alert(self.simple_alert_trigger)
 
     def open_confirm_alert(self):
-        self.confirm_alert_trigger.click()
-        return WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+        return self._open_alert(self.confirm_alert_trigger)
+
+    def open_prompt_alert(self):
+        return self._open_alert(self.prompt_alert_trigger)
