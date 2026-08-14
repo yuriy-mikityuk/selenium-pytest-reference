@@ -19,9 +19,9 @@ def test_choose_dropdown_option(web_form_page):
     assert actual_option == expected_option
 
 def test_set_checkbox_state(web_form_page):
-    # Default is on
+    # Checked is on
     assert web_form_page.checked_checkbox.is_checked()
-    # Checked is off
+    # Default is off
     assert not web_form_page.default_checkbox.is_checked()
 
     expected_state = True
@@ -32,3 +32,11 @@ def test_set_checkbox_state(web_form_page):
 
     web_form_page.checked_checkbox.set_checked(False)
     assert not web_form_page.checked_checkbox.is_checked()
+
+def test_select_radio_button(web_form_page):
+    assert web_form_page.checked_radio.is_selected()
+    assert not web_form_page.default_radio.is_selected()
+
+    web_form_page.default_radio.select()
+    assert not web_form_page.checked_radio.is_selected()
+    assert web_form_page.default_radio.is_selected()

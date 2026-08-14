@@ -28,3 +28,6 @@ class BaseElement:
 
     def get_text(self):
         return self.wait_until_displayed().text
+
+    def is_selected(self):
+       return self.find_element().is_selected()
