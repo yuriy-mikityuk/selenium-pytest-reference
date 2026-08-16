@@ -4,10 +4,10 @@ from framework.elements.base_element import BaseElement
 
 
 class SimplePage(BasePage):
-    _TEXT_IN_NEW_WINDOW = (By.XPATH, "//div")
+    _PAGE_TEXT = (By.XPATH, "//div")
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.text_in_new_window = (
-            BaseElement(self.driver, self._TEXT_IN_NEW_WINDOW)
+        self.page_text = (
+            BaseElement(self.driver, self._PAGE_TEXT)
         )

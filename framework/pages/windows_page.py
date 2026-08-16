@@ -40,3 +40,4 @@ class WindowsPage(BasePage):
 
     def get_number_of_windows(self):
         return len(self.driver.window_handles)
+
