@@ -40,3 +40,10 @@ def test_select_radio_button(web_form_page):
     web_form_page.default_radio.select()
     assert not web_form_page.checked_radio.is_selected()
     assert web_form_page.default_radio.is_selected()
+
+
+def test_send_keys_to_text_area(web_form_page):
+    expected_text = "Second"
+    web_form_page.send_keys_to_text_area(expected_text)
+    assert web_form_page.text_area.get_value() == expected_text
+

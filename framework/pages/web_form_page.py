@@ -7,6 +7,8 @@ from framework.pages.base_page import BasePage
 from framework.pages.submitted_form_page import SubmittedFormPage
 from framework.elements.checkbox import Checkbox
 from framework.elements.radio_button import RadioButton
+from selenium.webdriver.common.action_chains import ActionChains
+
 
 class WebFormPage(BasePage):
 
@@ -18,6 +20,7 @@ class WebFormPage(BasePage):
     _DEFAULT_CHECKBOX = (By.XPATH, "//input[@id='my-check-2']")
     _CHECKED_RADIO_BUTTON = (By.XPATH, "//input[@id='my-radio-1']")
     _DEFAULT_RADIO_BUTTON = (By.XPATH, "//input[@id='my-radio-2']")
+    _TEXT_AREA = (By.XPATH, '//*[@name="my-textarea"]')
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -30,10 +33,16 @@ class WebFormPage(BasePage):
 
         self.checked_radio = RadioButton(driver, self._CHECKED_RADIO_BUTTON)
         self.default_radio = RadioButton(driver, self._DEFAULT_RADIO_BUTTON)
+        self.text_area = TextInput(driver, self._TEXT_AREA)
 
     def submit(self):
         self.submit_button.click()
         return SubmittedFormPage(self.driver)
+
+    def send_keys_to_text_area(self, keys):
+        action = ActionChains(self.driver)
+        action.send_keys_to_element(self.text_area.wait_until_displayed(), keys).perform()
+
 
 
 

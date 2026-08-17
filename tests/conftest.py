@@ -5,13 +5,14 @@ from framework.pages.dynamic_page import DynamicPage
 from framework.pages.web_form_page import WebFormPage
 from framework.pages.alerts_page import AlertsPage
 from framework.pages.windows_page import WindowsPage
-
+from framework.pages.mouse_interaction_page import MouseInteractionPage
 
 @pytest.fixture()
 def driver():
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
     options.browser_version = "stable"
+    options.add_argument("--headless")
     browser = webdriver.Chrome(options=options)
     yield browser
     browser.quit()
@@ -39,6 +40,12 @@ def windows_page(driver):
     windows_page = WindowsPage(driver)
     windows_page.open()
     return windows_page
+
+@pytest.fixture()
+def mouse_interaction_page(driver):
+    mouse_interaction_page = MouseInteractionPage(driver)
+    mouse_interaction_page.open()
+    return mouse_interaction_page
 
 
 
