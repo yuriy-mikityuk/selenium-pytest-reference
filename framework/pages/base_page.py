@@ -25,3 +25,21 @@ class BasePage:
 
     def execute_script(self, script, *args):
         return self.driver.execute_script(script, *args)
+
+    def add_cookie(self, cookie_dict):
+        self.driver.add_cookie(cookie_dict)
+
+    def get_cookie(self, name):
+        return self.driver.get_cookie(name)
+
+    def get_cookies(self):
+        return self.driver.get_cookies()
+
+    def delete_cookie(self, name):
+        self.driver.delete_cookie(name)
+
+    def delete_all_cookies(self):
+        self.driver.delete_all_cookies()
+
+
+

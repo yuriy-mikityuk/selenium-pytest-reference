@@ -66,3 +66,8 @@ def test_select_all_and_replace(web_form_page):
 def test_scroll_to_element(web_form_page):
     web_form_page.return_to_index_link.scroll_into_view()
     assert web_form_page.return_to_index_link.is_displayed()
+
+def test_find_element_below(web_form_page):
+    password_input = web_form_page.get_password_input_attribute("name")
+    assert password_input == "my-password"
+    assert web_form_page.get_password_input_attribute("type") == "password"

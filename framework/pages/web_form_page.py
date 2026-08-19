@@ -12,6 +12,7 @@ from framework.elements.radio_button import RadioButton
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from framework.elements.base_element import BaseElement
+from selenium.webdriver.support.relative_locator import locate_with
 
 
 class WebFormPage(BasePage):
@@ -74,6 +75,13 @@ class WebFormPage(BasePage):
         .send_keys(Keys.BACKSPACE)
         .send_keys(new_text)
         .perform())
+
+    def get_password_input_attribute(self, attribute_name):
+        text_elem = self.text_input.wait_until_displayed()
+        password_elem = self.driver.find_element(
+            locate_with(By.TAG_NAME, "input").below(text_elem)
+        )
+        return password_elem.get_attribute(attribute_name)
 
 
 
