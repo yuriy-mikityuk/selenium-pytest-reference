@@ -7,6 +7,7 @@ from framework.pages.alerts_page import AlertsPage
 from framework.pages.windows_page import WindowsPage
 from framework.pages.mouse_interaction_page import MouseInteractionPage
 from framework.pages.scroll_page import ScrollPage
+from framework.pages.shadow_root_page import ShadowRootPage
 
 @pytest.fixture()
 def driver():
@@ -53,6 +54,14 @@ def scroll_page(driver):
     scroll_page = ScrollPage(driver)
     scroll_page.open()
     return scroll_page
+
+@pytest.fixture()
+def shadow_root_page(driver):
+    shadow_root_page = ShadowRootPage(driver)
+    shadow_root_page.open()
+    return shadow_root_page
+
+
 
 
 
