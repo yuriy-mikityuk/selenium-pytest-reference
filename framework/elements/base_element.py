@@ -31,3 +31,7 @@ class BaseElement:
 
     def is_selected(self):
        return self.find_element().is_selected()
+
+    def scroll_into_view(self):
+        self.driver.execute_script("arguments[0].scrollIntoView();", self.find_element())
+

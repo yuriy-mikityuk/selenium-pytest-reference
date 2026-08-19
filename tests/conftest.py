@@ -6,6 +6,7 @@ from framework.pages.web_form_page import WebFormPage
 from framework.pages.alerts_page import AlertsPage
 from framework.pages.windows_page import WindowsPage
 from framework.pages.mouse_interaction_page import MouseInteractionPage
+from framework.pages.scroll_page import ScrollPage
 
 @pytest.fixture()
 def driver():
@@ -46,6 +47,12 @@ def mouse_interaction_page(driver):
     mouse_interaction_page = MouseInteractionPage(driver)
     mouse_interaction_page.open()
     return mouse_interaction_page
+
+@pytest.fixture()
+def scroll_page(driver):
+    scroll_page = ScrollPage(driver)
+    scroll_page.open()
+    return scroll_page
 
 
 

@@ -47,3 +47,22 @@ def test_send_keys_to_text_area(web_form_page):
     web_form_page.send_keys_to_text_area(expected_text)
     assert web_form_page.text_area.get_value() == expected_text
 
+def test_upload_file(web_form_page):
+    web_form_page.upload_file("README.md")
+    assert web_form_page.file_input.get_value() == r"C:\fakepath\README.md"
+
+def test_type_uppercase_text(web_form_page):
+    expected_text = "SECOND"
+    web_form_page.type_uppercase_text("second")
+    assert web_form_page.text_area.get_value() == expected_text
+
+def test_select_all_and_replace(web_form_page):
+    initial_text = "Initial"
+    replaced_text = "Replaced"
+    web_form_page.text_input.fill(initial_text)
+    web_form_page.select_all_and_replace(replaced_text)
+    assert web_form_page.text_input.get_value() == replaced_text
+
+def test_scroll_to_element(web_form_page):
+    web_form_page.return_to_index_link.scroll_into_view()
+    assert web_form_page.return_to_index_link.is_displayed()

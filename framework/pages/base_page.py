@@ -22,3 +22,6 @@ class BasePage:
 
     def switch_to_default_content(self):
         self.driver.switch_to.default_content()
+
+    def execute_script(self, script, *args):
+        return self.driver.execute_script(script, *args)
