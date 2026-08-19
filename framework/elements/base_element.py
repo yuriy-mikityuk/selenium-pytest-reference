@@ -35,3 +35,9 @@ class BaseElement:
     def scroll_into_view(self):
         self.driver.execute_script("arguments[0].scrollIntoView();", self.find_element())
 
+    def take_screenshot(self, file_path: str) -> bool:
+        return self.wait_until_displayed().screenshot(file_path)
+
+    def get_screenshot_as_png(self) -> bytes:
+        return self.wait_until_displayed().screenshot_as_png
+

@@ -41,5 +41,13 @@ class BasePage:
     def delete_all_cookies(self):
         self.driver.delete_all_cookies()
 
+    def take_screenshot(self, file_path: str) -> bool:
+        return self.driver.save_screenshot(file_path)
+
+    def get_screenshot_as_png(self) -> bytes:
+        return self.driver.get_screenshot_as_png()
+
+
+
 
 
