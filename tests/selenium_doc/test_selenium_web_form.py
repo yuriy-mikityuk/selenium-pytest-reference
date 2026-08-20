@@ -71,3 +71,13 @@ def test_find_element_below(web_form_page):
     password_input = web_form_page.get_password_input_attribute("name")
     assert password_input == "my-password"
     assert web_form_page.get_password_input_attribute("type") == "password"
+
+def test_disabled_input(web_form_page):
+    assert not web_form_page.disabled_input.is_enabled()
+    assert web_form_page.disabled_input.get_attribute("disabled") == "true"
+
+def test_readonly_input(web_form_page):
+    assert web_form_page.readonly_input.is_enabled()
+    assert web_form_page.readonly_input.get_attribute("readonly") is not None
+    assert web_form_page.readonly_input.get_value() == "Readonly input"
+

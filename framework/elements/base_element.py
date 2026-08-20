@@ -41,3 +41,9 @@ class BaseElement:
     def get_screenshot_as_png(self) -> bytes:
         return self.wait_until_displayed().screenshot_as_png
 
+    def is_enabled(self):
+        return self.find_element().is_enabled()
+
+    def get_attribute(self, attribute_name):
+        return self.find_element().get_attribute(attribute_name)
+

@@ -28,6 +28,8 @@ class WebFormPage(BasePage):
     _TEXT_AREA = (By.XPATH, '//*[@name="my-textarea"]')
     _FILE_INPUT = (By.XPATH, "//input[@name='my-file']")
     _RETURN_TO_INDEX_LINK = (By.LINK_TEXT, "Return to index")
+    _DISABLED_INPUT = (By.XPATH, "//input[@name='my-disabled']")
+    _READONLY_INPUT = (By.XPATH, "//input[@name='my-readonly']")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -43,6 +45,8 @@ class WebFormPage(BasePage):
         self.text_area = TextInput(driver, self._TEXT_AREA)
         self.file_input = TextInput(driver, self._FILE_INPUT)
         self.return_to_index_link = BaseElement(driver, self._RETURN_TO_INDEX_LINK)
+        self.disabled_input = TextInput(driver, self._DISABLED_INPUT)
+        self.readonly_input = TextInput(driver, self._READONLY_INPUT)
 
     def submit(self):
         self.submit_button.click()
