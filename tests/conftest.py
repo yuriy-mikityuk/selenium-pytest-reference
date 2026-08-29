@@ -13,7 +13,7 @@ from framework.pages.shadow_root_page import ShadowRootPage
 def driver():
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
-    options.browser_version = "stable"
+    # options.browser_version = "stable"
     options.add_argument("--headless")
     browser = webdriver.Chrome(options=options)
     yield browser

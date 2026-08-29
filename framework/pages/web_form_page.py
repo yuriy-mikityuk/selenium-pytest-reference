@@ -30,6 +30,10 @@ class WebFormPage(BasePage):
     _RETURN_TO_INDEX_LINK = (By.LINK_TEXT, "Return to index")
     _DISABLED_INPUT = (By.XPATH, "//input[@name='my-disabled']")
     _READONLY_INPUT = (By.XPATH, "//input[@name='my-readonly']")
+    _RANGE_SLIDER = (By.XPATH, "//input[@name='my-range']")
+    _COLOR_PICKER = (By.XPATH, "//input[@name='my-colors']")
+    _DATE_PICKER = (By.XPATH, "//input[@name='my-date']")
+    _DATALIST_INPUT = (By.XPATH, "//input[@name='my-datalist']")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -47,6 +51,10 @@ class WebFormPage(BasePage):
         self.return_to_index_link = BaseElement(driver, self._RETURN_TO_INDEX_LINK)
         self.disabled_input = TextInput(driver, self._DISABLED_INPUT)
         self.readonly_input = TextInput(driver, self._READONLY_INPUT)
+        self.range_slider = BaseElement(driver, self._RANGE_SLIDER)
+        self.color_picker = TextInput(driver, self._COLOR_PICKER)
+        self.date_picker = TextInput(driver, self._DATE_PICKER)
+        self.datalist_input = TextInput(driver, self._DATALIST_INPUT)
 
     def submit(self):
         self.submit_button.click()
@@ -57,9 +65,12 @@ class WebFormPage(BasePage):
         action.send_keys_to_element(self.text_area.wait_until_displayed(), keys).perform()
 
     def type_uppercase_text(self, text):
+        text_area = self.text_area.wait_until_displayed()
+
         (ActionChains(self.driver)
+         .click(text_area)
          .key_down(Keys.SHIFT)
-         .send_keys_to_element(self.text_area.wait_until_displayed(), text)
+         .send_keys(text)
          .key_up(Keys.SHIFT)
          .perform())
 
@@ -87,6 +98,10 @@ class WebFormPage(BasePage):
         )
         return password_elem.get_attribute(attribute_name)
 
+    def set_range_slider_value_by_arrows(self, steps_right: int):
+        slider = self.range_slider.wait_until_displayed()
+        for _ in range(steps_right):
+            slider.send_keys(Keys.ARROW_RIGHT)
 
 
 

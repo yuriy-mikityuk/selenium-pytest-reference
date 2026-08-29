@@ -81,3 +81,44 @@ def test_readonly_input(web_form_page):
     assert web_form_page.readonly_input.get_attribute("readonly") is not None
     assert web_form_page.readonly_input.get_value() == "Readonly input"
 
+def test_range_slider_move_by_arrows(web_form_page):
+    # Verify default value
+    assert web_form_page.range_slider.get_attribute("value") == "5"
+
+    # Move 3 steps to the right
+    web_form_page.set_range_slider_value_by_arrows(3)
+
+    # Verify new value
+    assert web_form_page.range_slider.get_attribute("value") == "8"
+
+def test_color_picker(web_form_page):
+    # Verify default value
+    assert web_form_page.color_picker.get_value() == "#563d7c"
+
+    # Change color
+    web_form_page.color_picker.fill("#ff0000")
+
+    # Verify new value
+    assert web_form_page.color_picker.get_value() == "#ff0000"
+
+def test_date_picker(web_form_page):
+    # Verify default value
+    assert web_form_page.date_picker.get_value() == ""
+
+    # Change date
+    web_form_page.date_picker.fill("2023-01-01")
+
+    # Verify new value
+    assert web_form_page.date_picker.get_value() == "2023-01-01"
+
+def test_datalist_input(web_form_page):
+    # Verify default value
+    assert web_form_page.datalist_input.get_value() == ""
+    assert web_form_page.datalist_input.get_attribute("list") == "my-options"
+
+    # Change value
+    web_form_page.datalist_input.fill("Seattle")
+
+    # Verify new value
+    assert web_form_page.datalist_input.get_value() == "Seattle"
+
