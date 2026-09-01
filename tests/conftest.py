@@ -10,6 +10,7 @@ from framework.pages.scroll_page import ScrollPage
 from framework.pages.shadow_root_page import ShadowRootPage
 from framework.pages.pen_pages import PenPage
 from framework.pages.bidi_logging_page import BidiLoggingPage
+from framework.pages.bidi_network_page import BidiNetworkPage
 
 @pytest.fixture()
 def driver():
@@ -101,6 +102,9 @@ def firefox_bidi_driver():
     yield browser
     browser.quit()
 
+@pytest.fixture()
+def firefox_bidi_network_page(firefox_bidi_driver):
+    return BidiNetworkPage(firefox_bidi_driver)
 
 
 
