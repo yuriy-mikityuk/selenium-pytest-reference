@@ -21,4 +21,3 @@ def test_reveal_input(dynamic_page):
 
 
 
-

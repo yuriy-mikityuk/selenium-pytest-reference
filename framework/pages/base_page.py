@@ -47,6 +47,18 @@ class BasePage:
     def get_screenshot_as_png(self) -> bytes:
         return self.driver.get_screenshot_as_png()
 
+    def print_page(self, print_options=None):
+        return self.driver.print_page(print_options=print_options)
+
+    def refresh(self):
+        self.driver.refresh()
+
+    def back(self):
+        self.driver.back()
+
+    def forward(self):
+        self.driver.forward()
+
 
 
 

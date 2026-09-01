@@ -8,6 +8,8 @@ from framework.pages.windows_page import WindowsPage
 from framework.pages.mouse_interaction_page import MouseInteractionPage
 from framework.pages.scroll_page import ScrollPage
 from framework.pages.shadow_root_page import ShadowRootPage
+from framework.pages.pen_pages import PenPage
+from framework.pages.bidi_logging_page import BidiLoggingPage
 
 @pytest.fixture()
 def driver():
@@ -61,6 +63,43 @@ def shadow_root_page(driver):
     shadow_root_page.open()
     return shadow_root_page
 
+@pytest.fixture()
+def pen_page(driver):
+    page = PenPage(driver)
+    page.open()
+    return page
+
+@pytest.fixture()
+def bidi_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("start-maximized")
+    options.add_argument("--headless")
+    options.enable_bidi = True
+
+
+    browser = webdriver.Chrome(options=options)
+    yield browser
+    browser.quit()
+
+@pytest.fixture()
+def bidi_logging_page(bidi_driver):
+    page = BidiLoggingPage(bidi_driver)
+    page.open()
+    return page
+
+# Firefox is used for BiDi network interception because ChromeDriver hangs
+# when classic navigation waits for network.continueRequest.
+# TODO: Re-enable this scenario in Chrome after the bug is fixed:
+# https://issues.chromium.org/issues/425906330
+@pytest.fixture()
+def firefox_bidi_driver():
+    options = webdriver.FirefoxOptions()
+    options.add_argument("-headless")
+    options.enable_bidi = True
+
+    browser = webdriver.Firefox(options=options)
+    yield browser
+    browser.quit()
 
 
 

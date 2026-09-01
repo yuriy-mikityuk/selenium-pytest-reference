@@ -51,6 +51,9 @@ def test_upload_file(web_form_page):
     web_form_page.upload_file("README.md")
     assert web_form_page.file_input.get_value() == r"C:\fakepath\README.md"
 
+# With Russian active as the macOS input source, ChromeDriver can insert
+# lowercase Latin text despite Shift being held. Track the ChromeDriver fix at:
+# https://issues.chromium.org/issues/553408024
 def test_type_uppercase_text(web_form_page):
     expected_text = "SECOND"
     web_form_page.type_uppercase_text("second")
