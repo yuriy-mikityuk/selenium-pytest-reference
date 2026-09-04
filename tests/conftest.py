@@ -34,6 +34,9 @@ def web_form_page(driver):
     web_form_page.open()
     return web_form_page
 
+
+
+
 @pytest.fixture()
 def alerts_page(driver):
     alerts_page = AlertsPage(driver)
@@ -88,9 +91,20 @@ def bidi_logging_page(bidi_driver):
     page.open()
     return page
 
-# Firefox is used for BiDi network interception because ChromeDriver hangs
-# when classic navigation waits for network.continueRequest.
-# TODO: Re-enable this scenario in Chrome after the bug is fixed:
+
+# Firefox is used for BiDi network interception: in Chrome, a classic
+# navigation (driver.get) that waits for a BiDi command response deadlocks.
+# Affects both network.continueRequest and network.continueWithAuth.
+#
+# Symptom: driver.get() blocks until the page load timeout, then raises
+#   TimeoutException: timeout: Timed out receiving message from renderer
+#
+# Verified 2026-09-02 on Chrome 152.0.7977.65 / ChromeDriver 152.0.7977.75 /
+# Selenium 4.46.0. Both auth styles fail identically (add_auth_handler and
+# add_authentication_handler), so this is the interception phase, not the API.
+#
+# TODO: switch these fixtures back to Chrome once fixed — check by running
+# the BiDi tests against a Chrome driver with enable_bidi.
 # https://issues.chromium.org/issues/425906330
 @pytest.fixture()
 def firefox_bidi_driver():

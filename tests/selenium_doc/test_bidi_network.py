@@ -1,5 +1,12 @@
-def test_firefox_bidi_intercepts_navigation(firefox_bidi_network_page):
-    request = firefox_bidi_network_page.capture_navigation_request()
+from framework.pages.bidi_network_page import BidiNetworkPage
+from framework.bidi.request_collector import RequestCollector
 
-    assert request.url == firefox_bidi_network_page.URL
-    assert request.method == "GET"
+def test_firefox_bidi_intercepts_navigation(firefox_bidi_driver):
+    page = BidiNetworkPage(firefox_bidi_driver)
+
+    with RequestCollector(firefox_bidi_driver, [page.URL], timeout=10) as requests:
+        page.open()
+        requests.wait_for(1)
+
+    assert requests[0].url == page.URL
+    assert requests[0].method == "GET"
