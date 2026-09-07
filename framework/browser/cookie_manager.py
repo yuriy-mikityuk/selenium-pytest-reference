@@ -10,7 +10,7 @@ class CookieManager:
     def set(self, name: str, value: str) -> None:
         self.add_cookie({"name": name, "value": value})
 
-    def get(self, name: str) -> str | None:
+    def get_value(self, name: str) -> str | None:
         cookie = self.get_cookie(name)
         if cookie is None:
             return None
