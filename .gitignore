@@ -7,3 +7,9 @@ __pycache__/
 .coverage
 htmlcov/
 .env
+
+# Test artifacts (root-level only, so docs/assets images stay tracked)
+/*.png
+/*.pdf
+/artifacts/
+/downloads/
