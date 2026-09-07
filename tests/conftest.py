@@ -34,8 +34,32 @@ def web_form_page(driver):
     web_form_page.open()
     return web_form_page
 
+@pytest.fixture()
+def driver_factory():
+    drivers = []
+
+    def create_driver():
+        options = webdriver.ChromeOptions()
+        options.add_argument("start-maximized")
+        options.add_argument("--headless")
+        browser = webdriver.Chrome(options=options)
+        drivers.append(browser)
+        return browser
 
 
+    yield create_driver
+
+    for driver in drivers:
+        driver.quit()
+
+@pytest.fixture()
+def web_form_factory(driver_factory):
+    def create_page():
+        page = WebFormPage(driver_factory())
+        page.open()
+        return page
+
+    return create_page
 
 @pytest.fixture()
 def alerts_page(driver):
