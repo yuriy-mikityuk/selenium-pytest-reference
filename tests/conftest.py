@@ -1,5 +1,8 @@
 import pytest
+from collections.abc import Callable
 from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
+
 
 from framework.pages.dynamic_page import DynamicPage
 from framework.pages.web_form_page import WebFormPage
@@ -11,6 +14,9 @@ from framework.pages.shadow_root_page import ShadowRootPage
 from framework.pages.pen_pages import PenPage
 from framework.pages.bidi_logging_page import BidiLoggingPage
 from framework.pages.bidi_network_page import BidiNetworkPage
+
+DriverFactory = Callable[[], WebDriver]
+WebFormFactory = Callable[[], WebFormPage]
 
 @pytest.fixture()
 def driver():
@@ -34,13 +40,15 @@ def web_form_page(driver):
     web_form_page.open()
     return web_form_page
 
-@pytest.fixture()
-def driver_factory(request):
 
-    def create_driver():
+
+@pytest.fixture()
+def driver_factory(request: pytest.FixtureRequest) -> DriverFactory:
+    def create_driver() -> WebDriver:
         options = webdriver.ChromeOptions()
         options.add_argument("start-maximized")
         options.add_argument("--headless")
+
         browser = webdriver.Chrome(options=options)
         request.addfinalizer(browser.quit)
         return browser
@@ -48,8 +56,8 @@ def driver_factory(request):
     return create_driver
 
 @pytest.fixture()
-def web_form_factory(driver_factory):
-    def create_page():
+def web_form_factory(driver_factory: DriverFactory) -> WebFormFactory:
+    def create_page() -> WebFormPage:
         page = WebFormPage(driver_factory())
         page.open()
         return page
