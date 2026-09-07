@@ -1,12 +1,13 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.bidi.network import Request
 
 
 class RequestCollector:
     def __init__(self, driver: WebDriver, url_patterns, timeout=5):
         self.timeout = timeout
         self.handler_id = None
-        self.requests = []
+        self.requests: list[Request] = []
         self.url_patterns = url_patterns
         self.driver = driver
 

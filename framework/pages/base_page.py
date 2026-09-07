@@ -2,9 +2,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from framework.browser.cookie_manager import CookieManager
+from typing import ClassVar
 
 class BasePage:
-    URL = None
+    URL: ClassVar[str]
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
