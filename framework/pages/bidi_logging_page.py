@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from framework.elements.base_element import BaseElement
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.bidi.script import ConsoleMessage
+from selenium.webdriver.common.bidi.log import JavascriptLogEntry
+
 
 class BidiLoggingPage(BasePage):
     URL = "https://www.selenium.dev/selenium/web/bidi/logEntryAdded.html"
@@ -15,7 +18,7 @@ class BidiLoggingPage(BasePage):
         self.js_exception_button = BaseElement(self.driver, self._JS_EXCEPTION_BUTTON)
 
     def capture_console_log(self, timeout=5):
-        log_entries = []
+        log_entries: list[ConsoleMessage] = []
         handler_id = self.driver.script.add_console_message_handler(
             log_entries.append
         )
@@ -31,7 +34,7 @@ class BidiLoggingPage(BasePage):
             self.driver.script.remove_console_message_handler(handler_id)
 
     def capture_javascript_error(self, timeout=5):
-        log_entries = []
+        log_entries: list[JavascriptLogEntry] = []
         handler_id = self.driver.script.add_javascript_error_handler(
             log_entries.append)
         try:
