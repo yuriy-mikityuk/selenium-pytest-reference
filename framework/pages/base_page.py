@@ -1,12 +1,14 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from framework.browser.cookie_manager import CookieManager
 
 class BasePage:
     URL = None
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
+        self.cookies = CookieManager(driver)
 
     def open(self):
         self.driver.get(self.URL)
@@ -26,21 +28,6 @@ class BasePage:
     def execute_script(self, script, *args):
         return self.driver.execute_script(script, *args)
 
-    def add_cookie(self, cookie_dict):
-        self.driver.add_cookie(cookie_dict)
-
-    def get_cookie(self, name):
-        return self.driver.get_cookie(name)
-
-    def get_cookies(self):
-        return self.driver.get_cookies()
-
-    def delete_cookie(self, name):
-        self.driver.delete_cookie(name)
-
-    def delete_all_cookies(self):
-        self.driver.delete_all_cookies()
-
     def take_screenshot(self, file_path: str) -> bool:
         return self.driver.save_screenshot(file_path)
 
@@ -58,8 +45,3 @@ class BasePage:
 
     def forward(self):
         self.driver.forward()
-
-
-
-
-
