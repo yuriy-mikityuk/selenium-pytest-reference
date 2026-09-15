@@ -83,11 +83,13 @@ def test_update_post_title():
     }
 
     response = requests.patch(
-        # передай url и update_data
+        url=url,
+        json=update_data
     )
 
-    # проверь статус
+    assert response.status_code == 200
+
     payload = response.json()
 
-    # проверь id поста
-    # проверь изменённый title
+    assert payload["id"] == 1
+    assert payload["title"] == "Updated title"
