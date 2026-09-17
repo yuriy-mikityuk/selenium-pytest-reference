@@ -75,4 +75,4 @@ uv run pytest tests/selenium_doc/test_bidi_network.py -v
 
 **ChromeDriver на macOS: Shift+буква печатает строчные при русской раскладке.**
 `test_type_uppercase_text` падает локально на macOS, когда активна русская раскладка, и проходит на Linux в CI.
-[Chromium issue 553408024](https://issues.chromium.org/issues/553408024) — завёл автор репозитория.
+[Chromium issue 553408024](https://issues.chromium.org/issues/553408024) — завёл автор репозитория и отправил исправление: [CL 8420941](https://chromium-review.googlesource.com/c/chromium/src/+/8420941) (на ревью).

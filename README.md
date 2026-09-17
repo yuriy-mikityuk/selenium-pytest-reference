@@ -75,4 +75,4 @@ With a network intercept active, `driver.get()` blocks until the page load timeo
 
 **ChromeDriver on macOS: Shift+letter produces lowercase text with a Russian input source.**
 `test_type_uppercase_text` fails locally on macOS while the Russian input source is active, and passes on Linux in CI.
-[Chromium issue 553408024](https://issues.chromium.org/issues/553408024) — reported by the author.
+[Chromium issue 553408024](https://issues.chromium.org/issues/553408024) — reported by the author, who also submitted a fix: [CL 8420941](https://chromium-review.googlesource.com/c/chromium/src/+/8420941) (in review).
