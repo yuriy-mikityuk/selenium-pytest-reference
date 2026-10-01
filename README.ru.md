@@ -70,8 +70,8 @@ uv run pytest tests/selenium_doc/test_bidi_network.py -v
 Баги браузеров, найденные в процессе работы над фреймворком. Каждый воспроизведён и передан разработчикам.
 
 **Chrome: перехват сети через BiDi вешает обычную навигацию.**
-При активном сетевом перехвате `driver.get()` блокируется до таймаута загрузки страницы и падает с `Timed out receiving message from renderer`. Затрагивает `continueRequest`, `failRequest` и `continueWithAuth`, поэтому сетевые BiDi-тесты запускаются в Firefox (см. фикстуру `firefox_bidi_driver`).
-[Chromium issue 425906330](https://issues.chromium.org/issues/425906330) — матрицу воспроизведения по версиям Selenium и ChromeDriver добавил автор репозитория.
+При активном сетевом перехвате `driver.get()` блокируется до таймаута загрузки страницы и падает с `Timed out receiving message from renderer`. ChromeDriver ставит пересылаемые BiDi-команды вроде `network.continueRequest` в очередь за выполняющейся классической командой, поэтому перехваченный запрос так и не отпускается. Так же зависают `failRequest` и `continueWithAuth`. Навигация через BiDi этого избегает, поэтому страницы с перехватом открываются через `open_via_bidi()`, и сетевые BiDi-тесты идут и в Chrome, и в Firefox.
+[Chromium issue 425906330](https://issues.chromium.org/issues/425906330) — матрицу воспроизведения и разбор причины добавил автор репозитория.
 
 **ChromeDriver на macOS: Shift+буква печатает строчные при русской раскладке.**
 `test_type_uppercase_text` падает локально на macOS, когда активна русская раскладка, и проходит на Linux в CI.

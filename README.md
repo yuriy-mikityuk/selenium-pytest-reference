@@ -70,8 +70,8 @@ uv run pytest tests/selenium_doc/test_bidi_network.py -v
 Browser bugs hit while building this framework, each reproduced and taken upstream.
 
 **Chrome: BiDi network interception hangs classic navigation.**
-With a network intercept active, `driver.get()` blocks until the page load timeout and fails with `Timed out receiving message from renderer`. It affects `continueRequest`, `failRequest` and `continueWithAuth`, so BiDi network tests run on Firefox (see the `firefox_bidi_driver` fixture).
-[Chromium issue 425906330](https://issues.chromium.org/issues/425906330) — reproduction matrix across Selenium and ChromeDriver versions contributed by the author.
+With a network intercept active, `driver.get()` blocks until the page load timeout and fails with `Timed out receiving message from renderer`. ChromeDriver queues forwarded BiDi commands such as `network.continueRequest` behind the classic command in progress, so the intercepted request is never released. `failRequest` and `continueWithAuth` hang the same way. Navigating through BiDi avoids it, so pages with interception are opened with `open_via_bidi()` and the BiDi network tests run on both Chrome and Firefox.
+[Chromium issue 425906330](https://issues.chromium.org/issues/425906330) — reproduction matrix and root cause analysis contributed by the author.
 
 **ChromeDriver on macOS: Shift+letter produces lowercase text with a Russian input source.**
 `test_type_uppercase_text` fails locally on macOS while the Russian input source is active, and passes on Linux in CI.

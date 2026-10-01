@@ -14,6 +14,14 @@ class BasePage:
     def open(self):
         self.driver.get(self.URL)
 
+    def open_via_bidi(self):
+        # With an active network intercept, ChromeDriver can't answer BiDi
+        # commands like network.continueRequest while classic driver.get() runs,
+        # so the classic navigation hangs: https://issues.chromium.org/issues/425906330
+        self.driver.browsing_context.navigate(
+            context=self.driver.current_window_handle, url=self.URL, wait="complete"
+        )
+
     def close_current_window(self):
         self.driver.close()
 
