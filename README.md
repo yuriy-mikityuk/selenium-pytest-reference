@@ -37,17 +37,18 @@ framework/
 ├── browser/    browser-level services attached to pages (CookieManager)
 └── bidi/       WebDriver BiDi helpers (RequestCollector)
 tests/
-├── conftest.py      driver, page and factory fixtures
+├── conftest.py      --browser option, failure screenshots, driver, page and factory fixtures
 ├── selenium_doc/    UI tests, one file per Selenium documentation topic
 └── api/             REST API tests
 ```
 
 - **Tests never touch the driver or locators directly.** Everything goes through page objects and element wrappers.
-- **Elements** wrap a locator together with the explicit waits around it.
+- **Elements** wrap a locator together with the explicit waits around it. Every call goes through one wait and logs the locator and the result. State readers such as `is_displayed` wait for presence only, so a hidden or disabled element gives `False` instead of a timeout.
 - **Pages** declare `URL` as `ClassVar[str]`, so a page without a URL is caught by the type checker instead of failing later as `driver.get(None)`.
 - **Browser services are composed, not inherited.** `page.cookies` is a `CookieManager` instance rather than a set of proxy methods on `BasePage`.
 - **Network interception** lives in `RequestCollector`, a context manager: the handler is registered on enter and always removed on exit, even when the test fails.
-- **Factory fixtures** create resources on demand. `driver_factory` opens as many independent sessions as a test needs and closes each one through `request.addfinalizer`.
+- **Factory fixtures** create resources on demand. `driver_factory` opens as many independent sessions as a test needs and closes each one through `request.addfinalizer`. It is the only place that starts a browser, so options live in one spot and the failure hook sees every session.
+- **Drivers are function-scoped on purpose.** Tests leave cookies, open windows and virtual authenticators behind, so each one gets a fresh browser.
 
 ## Quick start
 
@@ -63,7 +64,19 @@ Run a single area:
 
 ```bash
 uv run pytest tests/selenium_doc/test_bidi_network.py -v
+uv run pytest -m api                # markers: ui, api, bidi
+uv run pytest --browser=firefox     # chrome by default
 ```
+
+Tests marked `chrome_only` are skipped on Firefox, with the reason in the report.
+
+## Reports
+
+```bash
+uv run pytest --html=artifacts/report.html --self-contained-html
+```
+
+The report holds the element log of every test. When a test fails, a screenshot from each of its browsers goes into the report and into `artifacts/screenshots/`. CI runs the suite on Chrome and Firefox and uploads `artifacts/` after every run.
 
 ## Known browser issues
 

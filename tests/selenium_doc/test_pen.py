@@ -1,3 +1,8 @@
+import pytest
+
+pytestmark = pytest.mark.chrome_only("Firefox does not implement pointerMove for pen input")
+
+
 def test_pen_input(pen_page):
     pen_page.draw_with_pen()
     assert "pointerType: pen" in pen_page.pointer_down.get_text()
