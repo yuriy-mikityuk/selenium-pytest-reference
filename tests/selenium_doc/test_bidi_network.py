@@ -1,5 +1,10 @@
+import pytest
+
 from framework.pages.bidi_network_page import BidiNetworkPage
 from framework.bidi.request_collector import RequestCollector
+
+pytestmark = pytest.mark.bidi
+
 
 def test_bidi_intercepts_navigation(bidi_network_page: BidiNetworkPage):
     page = bidi_network_page

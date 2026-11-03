@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_fill_inputs(web_form_page):
     expected_text = "First"  # Arrange
     expected_received_text = "Received!"
@@ -94,6 +97,7 @@ def test_range_slider_move_by_arrows(web_form_page):
     # Verify new value
     assert web_form_page.range_slider.get_attribute("value") == "8"
 
+@pytest.mark.chrome_only("send_keys does not change a color input in Firefox")
 def test_color_picker(web_form_page):
     # Verify default value
     assert web_form_page.color_picker.get_value() == "#563d7c"

@@ -1,3 +1,8 @@
+import pytest
+
+pytestmark = pytest.mark.bidi
+
+
 def test_bidi_session_has_websocket(bidi_driver):
     assert bidi_driver.capabilities.get("webSocketUrl")
 

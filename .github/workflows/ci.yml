@@ -16,8 +16,17 @@ jobs:
     tests:
       runs-on: ubuntu-latest
       timeout-minutes: 20
+      strategy:
+        fail-fast: false
+        matrix:
+          browser: [chrome, firefox]
       steps:
         - uses: actions/checkout@v7
         - uses: astral-sh/setup-uv@v10.1.0
         - run: uv sync
-        - run: uv run pytest tests
+        - run: uv run pytest tests --browser=${{ matrix.browser }} --html=artifacts/report.html --self-contained-html
+        - uses: actions/upload-artifact@v7
+          if: always()
+          with:
+            name: test-report-${{ matrix.browser }}
+            path: artifacts/

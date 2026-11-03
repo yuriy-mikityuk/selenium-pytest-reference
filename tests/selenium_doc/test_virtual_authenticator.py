@@ -3,6 +3,9 @@ from selenium.webdriver.common.virtual_authenticator import VirtualAuthenticator
 from base64 import urlsafe_b64decode
 from selenium.webdriver.common.virtual_authenticator import Credential
 
+pytestmark = pytest.mark.chrome_only("Selenium supports virtual authenticators on Chromium only")
+
+
 def test_add_and_remove_virtual_authenticator(driver):
     options = VirtualAuthenticatorOptions()
 
