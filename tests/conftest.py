@@ -22,7 +22,7 @@ DriverFactory = Callable[..., WebDriver]
 WebFormFactory = Callable[[], WebFormPage]
 
 BROWSERS = {
-    "chrome": (webdriver.Chrome, webdriver.ChromeOptions, ["start-maximized", "--headless"]),
+    "chrome": (webdriver.Chrome, webdriver.ChromeOptions, ("start-maximized", "--headless")),
     "firefox": (webdriver.Firefox, webdriver.FirefoxOptions, ["-headless"]),
 }
 

@@ -3,6 +3,7 @@ import logging
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.remote.webelement import WebElement
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,7 @@ class BaseElement:
         by, value = self.locator
         return f"{type(self).__name__}({by}={value})"
 
-    def _wait(self, condition, state, timeout):
+    def _wait(self, condition, state, timeout) -> WebElement:
         # The one path to the element: every method below goes through here
         failure = f"{self} is not {state} after {timeout}s"
         try:
